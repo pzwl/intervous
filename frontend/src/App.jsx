@@ -8,7 +8,7 @@ function App() {
     <>
       <h1>Welcome to Intervous</h1>
       <SignedOut>
-        <SignInButton />
+        <SignInButton mode='Modal'/>
       </SignedOut>
 
       <SignedIn>

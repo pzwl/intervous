@@ -1,5 +1,4 @@
 import React from 'react'
-import './App.css'
 import { SignedIn, SignInButton, SignOutButton, UserButton } from '@clerk/clerk-react';
 import { SignedOut } from '@clerk/clerk-react';
 

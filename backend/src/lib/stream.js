@@ -5,16 +5,12 @@ const apiKey = ENV.STREAM_API_KEY;
 const apiSecret = ENV.STREAM_API_SECRET;
 
 if(!apiKey || !apiSecret){
-    console.warn("STREAM_API_KEY or STREAM_API_SECRET is not defined. Chat features will be disabled.");
+    throw new Error("STREAM_API_KEY or STREAM_API_SECRET is not defined");
 }
 
-export const chatClient = (apiKey && apiSecret) ? StreamChat.getInstance({apiKey, apiSecret}) : null;
+export const chatClient = new StreamChat(apiKey, apiSecret);
 
 export const upsertUser = async (user) => { // upsert meaning to insert or update
-    if (!chatClient) {
-        console.log("Stream Chat client not initialized. Skipping upsertUser.");
-        return;
-    }
     try{
         await chatClient.upsertUser(user);
         console.log(`Upserted user ${user.id} to Stream`);
@@ -26,10 +22,6 @@ export const upsertUser = async (user) => { // upsert meaning to insert or updat
 
 
 export const deleteUser = async (userID) => { // upsert meaning to insert or update
-    if (!chatClient) {
-        console.log("Stream Chat client not initialized. Skipping deleteUser.");
-        return;
-    }
     try{
         await chatClient.deleteUser(userID);
         console.log(`Deleted user ${userID} from Stream`);

@@ -129,7 +129,7 @@ export async function joinSession(req, res) {
         }
         
         if(session.participant){
-            return res.status(400).json({message: "Session is already full"});
+            return res.status(409).json({message: "Session is already full"});
         }
 
         session.participant = userId;

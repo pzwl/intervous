@@ -124,6 +124,9 @@ export async function joinSession(req, res) {
             return res.status(400).json({message: "Session is already completed"});
         }
 
+        if(session.host.toString() === userId.toString()){
+            return res.status(400).json({message: "You cannot join your own session"});
+        }
         
         if(session.participant){
             return res.status(400).json({message: "Session is already full"});

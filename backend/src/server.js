@@ -7,7 +7,7 @@ import { functions, inngest } from './lib/inngest.js';
 import { connectDB } from './lib/db.js';
 import { clerkMiddleware } from '@clerk/express'
 import chatRoutes from './routes/chatRoutes.js';
-
+import sessionRoutes from './routes/sessionRoutes.js';
 
 
 const app = express();
@@ -29,7 +29,8 @@ app.get('/health' , (req,res) =>{
 })
 
 
-app.get('/api/chat' , chatRoutes , )
+app.use('/api/chat' , chatRoutes);
+app.use('/api/sessions' , sessionRoutes);
 
 
 if(ENV.NODE_ENV === 'production'){

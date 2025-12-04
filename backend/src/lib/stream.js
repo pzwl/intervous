@@ -1,4 +1,5 @@
 import {StreamChat} from 'stream-chat';
+import {StreamClient} from '@stream-io/node-sdk';
 import {ENV} from './env.js';
 
 const apiKey = ENV.STREAM_API_KEY;
@@ -8,7 +9,9 @@ if(!apiKey || !apiSecret){
     throw new Error("STREAM_API_KEY or STREAM_API_SECRET is not defined");
 }
 
+// this is for chat features
 export const chatClient = new StreamChat(apiKey, apiSecret);
+export const streamClient = new StreamClient(apiKey, apiSecret);
 
 export const upsertUser = async (user) => { // upsert meaning to insert or update
     try{
@@ -36,5 +39,3 @@ export const deleteUser = async (userID) => { // upsert meaning to insert or upd
 
 };
 
-
-// todo : add another

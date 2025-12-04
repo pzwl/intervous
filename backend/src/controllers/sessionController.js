@@ -170,8 +170,7 @@ export async function endSession(req, res) {
             return res.status(403).json({message: "You are not the host of this session"});
         } 
 
-        session.status = "completed";
-        await session.save();
+
 
         // after ending the session, we need to delete the video and chat
 
@@ -181,6 +180,9 @@ export async function endSession(req, res) {
 
         const channel = chatClient.channel("messaging", session.callId)
         await channel.delete();
+
+        session.status = "completed";
+        await session.save();
 
         res.status(200).json({message: "Session ended successfully"});
         

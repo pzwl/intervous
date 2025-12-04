@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
+import './index.css'
 import { ClerkProvider } from '@clerk/clerk-react'
 import { BrowserRouter } from 'react-router'
 import {
@@ -25,6 +26,6 @@ createRoot(document.getElementById('root')).render(
           <App />
         </ClerkProvider>
       </QueryClientProvider>
-      </BrowserRouter>
+    </BrowserRouter>
   </StrictMode>,
 )

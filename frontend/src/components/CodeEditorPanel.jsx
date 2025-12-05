@@ -33,7 +33,7 @@ function CodeEditorPanel({
     }, [editor]);
 
     return (
-        <div className="h-full bg-base-300 flex flex-col overflow-hidden">
+        <div className="h-full bg-base-300 flex flex-col overflow-hidden" onKeyDown={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between px-4 py-3 bg-base-100 border-t border-base-300">
                 <div className="flex items-center gap-3">
                     <img

@@ -1,5 +1,5 @@
 import { useUser } from "@clerk/clerk-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useEndSession, useJoinSession, useSessionById } from "../hooks/useSessions.js";
 import { PROBLEMS } from "../data/problems.js";
@@ -45,12 +45,23 @@ function SessionPage() {
     const [selectedLanguage, setSelectedLanguage] = useState("javascript");
     const [code, setCode] = useState(problemData?.starterCode?.[selectedLanguage] || "");
 
+    const joinAttempted = useRef(false);
+
     // auto-join session if user is not already a participant and not the host
     useEffect(() => {
         if (!session || !user || loadingSession) return;
-        if (isHost || isParticipant) return;
+        if (isHost || isParticipant || joinAttempted.current) return;
 
-        joinSessionMutation.mutate(id, { onSuccess: refetch });
+        joinAttempted.current = true;
+        joinSessionMutation.mutate(id, {
+            onSuccess: refetch,
+            onError: () => {
+                // reset if we want to allow retry, but for "Session Full" maybe not? 
+                // If it failed, we shouldn't spam retry.
+                // We rely on user action or refresh if they want to try again
+                // joinAttempted.current = false; 
+            }
+        });
     }, [session, user, loadingSession, isHost, isParticipant, id, joinSessionMutation, refetch]);
 
     // redirect the "participant" when session ends
